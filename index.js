@@ -24,7 +24,7 @@ module.export = {
     "base-200": "#E5E9F0" /* Base color, a little darker */,
     "base-300": "#D8DEE9" /* Base color, even more darker */,
     "base-content":
-      "#ffffff" /* Foreground content color to use on base color */,
+      "#2E3440" /* Foreground content color to use on base color */,
 
     info: "#EBCB8B" /* Info */,
     success: "#A3BE8C" /* Success */,

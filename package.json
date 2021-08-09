@@ -1,8 +1,10 @@
 {
   "name": "daisy-theme-nord",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "nord theme for daisyUI",
   "main": "index.js",
+  "module": "index.js",
+  "exports": "./index.js",
   "author": "HikaruEgashira <s1811320@gmail.com>",
   "license": "MIT"
 }
