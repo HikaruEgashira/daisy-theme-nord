@@ -28,4 +28,4 @@ export default {
   success: "#A3BE8C" /* Success */,
   warning: "#D08770" /* Warning */,
   error: "#BF616A" /* Error */,
-};
+} as const;
