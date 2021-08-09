@@ -1,4 +1,4 @@
-exports.default = {
+export default {
   nord: {
     primary: "#8FBCBB" /* Primary color */,
     "primary-focus": "#88C0D0" /* Primary color - focused */,

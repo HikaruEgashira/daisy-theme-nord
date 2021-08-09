@@ -1,6 +1,6 @@
 {
   "name": "daisy-theme-nord",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "nord theme for daisyUI",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
