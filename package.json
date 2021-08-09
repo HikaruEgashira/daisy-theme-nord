@@ -4,6 +4,7 @@
   "description": "nord theme for daisyUI",
   "main": "index.js",
   "exports": "./index.js",
+  "types": "index.d.ts",
   "author": "HikaruEgashira <s1811320@gmail.com>",
   "license": "MIT",
   "devDependencies": {
