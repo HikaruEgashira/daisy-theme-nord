@@ -1,6 +1,4 @@
 {
-  "name": "example",
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -19,5 +17,6 @@
     "vite-plugin-windicss": "^1.2.7",
     "vue-tsc": "^0.2.2",
     "windicss": "^3.1.6"
-  }
+  },
+  "private": true
 }

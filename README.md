@@ -2,7 +2,7 @@
 
 ![](./image.png)
 
-online demo https://play.tailwindcss.com/j4hcfCm5ih
+online demo <https://play.tailwindcss.com/15dpr3y0GX>
 
 ## usage
 
