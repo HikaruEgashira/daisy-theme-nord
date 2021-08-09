@@ -11,6 +11,6 @@ export default defineConfig({
     },
   },
   daisyui: {
-    themes: [nord],
+    themes: [{ nord }],
   },
 });

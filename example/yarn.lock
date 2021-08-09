@@ -401,13 +401,13 @@ csstype@^2.6.8:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
   integrity sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==
 
-daisy-theme-nord@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/daisy-theme-nord/-/daisy-theme-nord-1.4.0.tgz#1891a0fba9d373d972313c937953ad420b217313"
-  integrity sha512-6XtrRFSBcZhj8nOl7TZDk33XQREoyjPuJivZ1Rg+uG6oXiA+x6huHfaweun8JdLVaJSwSMXalrCic8wpqPqTPA==
+"daisy-theme-nord@file:..":
+  version "1.5.0"
 
-"daisyui@file:../dist":
-  version "0.0.0"
+daisyui@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.11.1.tgz#6d0fdeb6f1e2015c98b7ddc36eb29a176e252c0b"
+  integrity sha512-re9r/yJ3SvoQ6MnteakFgLnie63l9hdg+X4/4/+g3Py9F1TL3yPGQrpszBYz6sM123IJsCMxQZdTPFlu85xP1Q==
 
 debug@^4.3.2:
   version "4.3.2"
