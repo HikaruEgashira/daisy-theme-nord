@@ -1,10 +1,13 @@
 {
   "name": "daisy-theme-nord",
-  "version": "1.6.0",
-  "description": "nord theme for DaisyUI",
+  "version": "1.7.0",
+  "description": "Nord theme for DaisyUI",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup index.ts --dts --format cjs,esm",
     "example": "yarn build && cd example && yarn install && yarn dev"
