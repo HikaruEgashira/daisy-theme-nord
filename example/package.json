@@ -13,7 +13,7 @@
     "@vue/compiler-sfc": "^3.0.5",
     "daisy-theme-nord": "file:..",
     "typescript": "^4.3.2",
-    "vite": "^2.4.4",
+    "vite": "^2.9.16",
     "vite-plugin-windicss": "^1.2.7",
     "vue-tsc": "^0.2.2",
     "windicss": "^3.1.6"
