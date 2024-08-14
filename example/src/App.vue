@@ -13,10 +13,10 @@
   </div>
 
   <!-- tab -->
-  <div class="m-4 tabs">
-    <button class="tab tab-lifted">Tab 1</button>
-    <button class="tab tab-lifted tab-active">Tab 2</button>
-    <button class="tab tab-lifted">Tab 3</button>
+  <div className="m-4 tabs tabs-lifted">
+    <button className="tab">Tab 1</button>
+    <button className="tab tab-active">Tab 2</button>
+    <button className="tab">Tab 3</button>
   </div>
 
   <!-- toggle -->
