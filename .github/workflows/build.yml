@@ -1,0 +1,28 @@
+name: build
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Keep this job name stable: it is the required status check for merging
+  # pull requests (including Dependabot dependency updates).
+  example-build:
+    runs-on: hikae-2vcpu-ubuntu-2404-arm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # The example depends on the package via `file:..`, so build it first.
+      - name: Install package deps
+        run: yarn install --frozen-lockfile
+      - name: Build package
+        run: yarn build
+      - name: Install example deps
+        working-directory: example
+        run: yarn install --frozen-lockfile
+      - name: Build example
+        working-directory: example
+        run: yarn build
