@@ -1,22 +1,52 @@
 name: publish
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   publish:
-    runs-on: hikae-2vcpu-ubuntu-2404
+    # npm trusted publishing (OIDC) supports GitHub-hosted runners only.
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v1
         with:
-          node-version: 14
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+          persist-credentials: false
+      - uses: actions/setup-node@v4
         with:
-          useLockFile: false
+          # Trusted publishing requires npm >= 11.5.1.
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Ensure npm supports trusted publishing
+        run: npm install -g npm@^11.5.1
+      - name: Check tag matches package version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "v$version" ]; then
+            echo "::error::Tag $TAG does not match package.json version $version"
+            exit 1
+          fi
+      - name: Check version is not already published
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "::error::$name@$version is already published"
+            exit 1
+          fi
+      - run: yarn install --frozen-lockfile
       - run: yarn build
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          access: public
+      - name: Publish with npm trusted publishing
+        run: npm publish --access public
