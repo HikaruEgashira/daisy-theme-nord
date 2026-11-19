@@ -1,0 +1,23 @@
+name: build
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  example-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: |
+            yarn.lock
+            example/yarn.lock
+      - name: Build root package
+        run: yarn install --frozen-lockfile && yarn build
+      - name: Build example
+        working-directory: example
+        run: yarn install --frozen-lockfile && yarn build
