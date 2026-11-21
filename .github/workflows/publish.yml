@@ -1,22 +1,62 @@
 name: publish
 on:
-  release:
-    types: [created]
+  push:
+    tags: ["v*.*.*"]
+  pull_request:
+    paths:
+      - .github/workflows/publish.yml
+      - package.json
+
+permissions:
+  contents: read
 
 jobs:
   publish:
-    runs-on: hikae-2vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing (OIDC); no NPM_TOKEN
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Ensure npm >= 11.5.1 (trusted publishing)
+        run: |
+          if ! npx -y semver -r '>=11.5.1' "$(npm --version)" >/dev/null; then
+            npm install -g npm@^11.5.1
+          fi
+          npm --version
+      - name: Check tag matches package.json version
+        if: github.event_name == 'push'
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          if [ "${GITHUB_REF_NAME}" != "v${VERSION}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${VERSION}" >&2
+            exit 1
+          fi
+      - name: Check whether version is already published
+        id: published
+        if: github.event_name == 'push'
+        run: |
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          if npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
+            echo "${NAME}@${VERSION} is already published; skipping."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - run: yarn install --frozen-lockfile
       - run: yarn build
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          access: public
+      - name: Publish dry run (pull request)
+        if: github.event_name == 'pull_request'
+        # Use a unique prerelease version so the dry run does not fail on an
+        # already-published version; package.json is not committed back.
+        run: |
+          npm version --no-git-tag-version "$(node -p "require('./package.json').version")-pr.${{ github.event.number }}.${{ github.run_attempt }}"
+          npm publish --dry-run --access public --tag pr-dry-run
+      - name: Publish
+        if: github.event_name == 'push' && steps.published.outputs.exists != 'true'
+        run: npm publish --access public

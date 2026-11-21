@@ -14,6 +14,10 @@
   },
   "author": "HikaruEgashira <s1811320@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hikaevi/hikaevi.git"
+  },
   "devDependencies": {
     "@types/node": "^16.4.13",
     "tsup": "^4.13.1",
